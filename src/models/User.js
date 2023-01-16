@@ -2,6 +2,7 @@ const database = require('../config/db')
 
 class Users {
 
+
   async findAll(){
     try {
       let result = await database.select().table('users')
@@ -11,6 +12,8 @@ class Users {
         return []
     }
   }
+
+   async userCreate(){}
 
 }
 
