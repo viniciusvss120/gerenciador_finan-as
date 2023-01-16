@@ -7,7 +7,7 @@ class UserControler{
       await Users.findAll()
       res.send("Conenctado")
     } catch (error) {
-      res.send("Deu ruim")
+      res.send("Deu ruim", error)
     }
 
   }

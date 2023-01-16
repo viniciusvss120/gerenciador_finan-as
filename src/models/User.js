@@ -7,7 +7,7 @@ class Users {
       let result = await database.select().table('users')
       return result
     } catch (error) {
-        console.log("Deu ruim", error)
+        console.log("Deu ruim!!", error)
         return []
     }
   }
