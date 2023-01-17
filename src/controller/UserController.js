@@ -11,7 +11,6 @@ class UserControler{
       const {email, password} = req.body
 
       let user = await Users.findUser(email)
-      console.log(user)
 
       if(user) {
         let result = await bcrypt.compare(password, user.password)
