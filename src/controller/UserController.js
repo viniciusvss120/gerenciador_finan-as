@@ -1,5 +1,5 @@
 const Users = require('../models/User')
-const { use } = require('../router/routes')
+// const { use } = require('../router/routes')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const jwt_secret = process.env.JWT_SECRET
@@ -58,6 +58,7 @@ class UserControler{
       console.log(error)
     }
   }
+
 }
 
 
