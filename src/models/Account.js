@@ -13,14 +13,26 @@ class Account{
 
   async findAccount(description, id){
     try {
-      const result = description ? await database.select().from('account').where({
-        description
-      }): await database.select().from('account').where({
-        user_id: id
-      })
-      return result
+      if(description != undefined){
+        const result = await database.select().from('account').where({ description })
+        return result
+      }else{
+        const result = await database.select().from('account').where({ user_id: id  })
+        return result
+      }
+  
     } catch (error) {
       console.log('Deu ruim!', error)
+    }
+  }
+
+  async findAccountById(id){
+    try {
+      const accountId = await database.select().from('account').where({id})
+      console.log(accountId)
+      return accountId[0]
+    } catch (error) {
+      console.log(error)
     }
   }
 

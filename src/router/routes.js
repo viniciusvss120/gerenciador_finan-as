@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const AccountController = require('../controller/AccountController')
 const UserControler = require('../controller/UserController')
+const AccountController = require('../controller/AccountController')
+const CategoryController = require('../controller/CategoryController')
+const RecordController = require('../controller/RecordController')
 const AdminAuth = require('../middleware/AdminAuth')
 
 
@@ -12,10 +14,14 @@ router.get("/", (req,res) => {
 router.post("/login", UserControler.login)
 
 router.get("/test", UserControler.findUser)
-router.post("/createUser",AdminAuth.decoded, UserControler.createUser)
+router.post("/createuser",AdminAuth.decoded, UserControler.createUser)
 
 router.get("/accounts", AccountController.findAccount)
-router.post("/accountCreate", AccountController.createAcconut)
+router.post("/accountcreate", AccountController.createAcconut)
+
+router.post("/categorycreate", CategoryController.createCategory)
+
+router.post("/recordcreate", RecordController.createRecord)
 
 
 module.exports = router
