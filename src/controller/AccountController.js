@@ -21,6 +21,7 @@ class AccountController{
   }
 
   async createAcconut(req,res){
+    // O Id corresponde ai usuario
     const {id,description} = req.body
 
     // let userId = await Users.findUser()

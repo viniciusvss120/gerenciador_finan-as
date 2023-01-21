@@ -4,6 +4,7 @@ class CategoryController{
 
   async createCategory(req,res){
     try {
+      // O Id corresponde ai usuario
       const {id,description,operation} = req.body 
       
       const categoryExiste = await Category.findCategory(description)
