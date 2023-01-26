@@ -23,7 +23,8 @@ router.post("/categorycreate", CategoryController.createCategory)
 
 router.post("/recordcreate", RecordController.createRecord)
 router.post("/recordlist", RecordController.recordList)
-// router.post("/recordlistaccount", RecordController.recordListByAccount)
+router.post("/recordlistDate", RecordController.recordListByDate)
+router.post("/recordlistbalance", RecordController.totalBalance)
 
 
 module.exports = router

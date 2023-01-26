@@ -1,4 +1,4 @@
-const { from } = require('../config/db')
+const { from, sum } = require('../config/db')
 const database = require('../config/db')
 
 class Record{
@@ -31,14 +31,36 @@ class Record{
     }
   }
 
-  async findRecordByDate(date){
+  async balanceTotal(id){
     try {
-      const result = await database.select().from('record').where(date)
+ 
+      const result = await await database.select().from('record')
+        .innerJoin("users","users.id","record.user_id")
+        .where('users.id',id)
+      
       return result
+      
     } catch (error) {
       console.log(error)
     }
   }
+
+  // async findRecordByDate(date){
+  //   try {
+  //     console.log(date.startDate)
+  //     if(date.startDate != undefined){
+  //       const result = await database.select().from('record').where(date.startDate)
+  //       return console.log(result)
+  //     }else{
+  //       const filter = await database.select().from('record')
+  //       const newFilter = filter.filter(data => data.date > date.endDate)
+
+  //       return console.log(newFilter)
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   async recordCreate(record){
     try {

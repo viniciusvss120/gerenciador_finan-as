@@ -38,15 +38,71 @@ class RecordController{
 
   async recordListByDate(req,res){
     try {
-      const {date} = req.body
+      const {startDate, endDate} = req.body
 
-      const newDate = moment(date, 'MM-YYYY')
-      const startDate = newDate.startOf('date').toString()
-      const endDate = newDate.endOf('date')
+      const record = await Record.findRecord()
+      if(record != undefined){
+        // const filterArray = record.filter(index => index.user_id === id)
 
-      const record = await Record.findRecordByDate({newDate})
+        const data = record.map(index => {
+          let newDate = moment(index.date).format('DD/MM/YYYY')
+          index.date = newDate
+          return index
+        }) 
 
-      res.json(record)
+        let filterDate  = data.filter(index => index.date >= startDate && index.date <= endDate)
+        res.json(filterDate)
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async totalBalance(req, res){
+    try {
+      const {id, startDate, endDate} = req.body
+
+      const total = await Record.balanceTotal(id)
+
+      
+      if(total != undefined){
+
+        const data = total.map(index => {
+          let newDate = moment(index.date).format('DD/MM/YYYY')
+          index.date = newDate
+          return index
+        }) 
+
+        if(startDate != undefined && endDate != undefined){
+          const newBalance = data.filter(index => index.date >= startDate && index.date <= endDate )
+          // console.log(newBalance)
+
+          let saldo = 0
+
+          newBalance.forEach(valor => {  
+            saldo += Number(valor.amount)
+            return saldo 
+          })
+
+          res.status(200)
+          res.json(saldo)
+        }else{
+          let saldo = 0
+
+          data.forEach(valor => {  
+            saldo += Number(valor.amount)
+            return saldo 
+          })
+  
+          res.status(200)
+          res.json(saldo)
+        }
+
+      }else{
+        res.status(404)
+        res.json("Deu ruim")
+      }
     } catch (error) {
       console.log(error)
     }
@@ -63,6 +119,8 @@ class RecordController{
         throw new Error("invalid date!")
       }
 
+      const newDate = moment(date).format('YYYY-MM-DD')
+
       const findAccount = await Account.findAccountById(account)
       const findCategory = await Category.findCategoryById(category)
 
@@ -76,7 +134,7 @@ class RecordController{
           category: findCategory.description,
           amount,
           type,
-          date,
+          date: newDate,
           description,
           tags,
           note
